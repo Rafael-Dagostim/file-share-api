@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  email    String
+  username String
+  password String
+  hash     String
+
+  options UserOptions
+  meta    UserMetadata
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+  deletedAt DateTime?
+
+  packages FilePackage[]
+}
+
+model FilePackage {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  param String
+  files FileMetadata[]
+
+  options FilePackageOptions
+  meta    FilePackageMetadata
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+  deletedAt DateTime?
+
+  userId String? @db.ObjectId
+  user   User?   @relation(fields: [userId], references: [id])
+}
+
+type UserOptions {
+  langauge String
+  theme    PageThemeEnum
+}
+
+type UserMetadata {
+  allowedMaxSizeKb Int
+  usedSizeKb       Int
+  maxPackageCount  Int
+  usedPackageCount Int
+  lastLoginAt      DateTime
+}
+
+type FileMetadata {
+  originalName String
+  storedName   String
+  sizeKb       Int
+  mimetype     String
+}
+
+type FilePackageOptions {
+  password String?
+  hash     String?
+  encrypt  Boolean
+}
+
+type FilePackageMetadata {
+  accessCount   Int
+  downloadCount Int
+  deadline      DateTime
+}
+
+enum PageThemeEnum {
+  DARK
+  LIGHT
+}

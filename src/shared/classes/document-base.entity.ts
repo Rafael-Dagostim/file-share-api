@@ -1,11 +1,11 @@
 export abstract class DocumentBaseEntity {
   /**
-   * Row id.
+   * Register id.
    */
   public id: string;
 
   /**
-   * Creation date of row.
+   * Creation date of register.
    */
   public createdAt: Date;
 
@@ -15,7 +15,7 @@ export abstract class DocumentBaseEntity {
   public updatedAt: Date;
 
   /**
-   * Date when row was "soft-deleted" (if not null).
+   * Date when register was "soft-deleted" (if not null).
    */
   public deletedAt: Date | null;
 

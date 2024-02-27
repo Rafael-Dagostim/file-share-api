@@ -26,32 +26,16 @@ export class FilePackageEntity extends DocumentBaseEntity implements FilePackage
 
   /**
    * Files metadata to identify and load files from package.
-   * @example [{
-   *  originalName: 'imagem.png';
-   *  storedName: '18y31b211.png';
-   *  sizeKb: 300;
-   *  mimetype: 'image/png';
-   * }]
    */
   public files: FileMetadata[];
 
   /**
    * Options selected for this file package.
-   * @example {
-   *  password: null;
-   *  hash: null;
-   *  encrypt: true;
-   * }
    */
   public options: FilePackageOptions;
 
   /**
    * Package metadata
-   * @example {
-   *  accessCount: 20;
-   *  downloadCount: 18;
-   *  deadline: new Date();
-   * }
    */
   public meta: FilePackageMetadata;
 

@@ -1,0 +1,35 @@
+version: '3'
+services:
+  database:
+    image: mongo:latest
+    container_name: mongo_database
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - app_network
+
+  app:
+    image: node:18-alpine
+    container_name: node_app
+    working_dir: /app
+    user: root
+    volumes:
+      - ./:/app
+    ports:
+      - "4000:4000"
+    environment:
+      - DATABASE_URL=mongodb://database:27017/file-share-db
+    depends_on:
+      - database
+    networks:
+      - app_network
+    command:
+      sh -c "npm i -g pnpm && pnpm install && pnpm prisma generate && pnpm start:debug"
+
+networks:
+  app_network:
+
+volumes:
+  mongodb_data:
